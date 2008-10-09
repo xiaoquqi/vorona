@@ -1,4 +1,5 @@
 (in F:/My Programs/KpiManagement)
+rake chart:install                   # Install the Open Flash Chart components
 rake db:abort_if_pending_migrations  # Raises an error if there are pending migrations
 rake db:charset                      # Retrieves the charset for the current environment's database
 rake db:collation                    # Retrieves the collation for the current environment's database
@@ -39,6 +40,7 @@ rake gems:build                      # Build any native extensions for unpacked 
 rake gems:install                    # Installs all required gems for this application.
 rake gems:unpack                     # Unpacks the specified gem into vendor/gems.
 rake gems:unpack:dependencies        # Unpacks the specified gems and its dependencies into vendor/gems
+rake import:kpi_group                # Import KPI Group
 rake log:clear                       # Truncates all *.log files in log/ to zero bytes
 rake notes                           # Enumerate all annotations
 rake notes:fixme                     # Enumerate all FIXME annotations

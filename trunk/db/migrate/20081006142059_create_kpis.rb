@@ -5,7 +5,7 @@ class CreateKpis < ActiveRecord::Migration
       t.column :human_name, :string, :null => false
       t.column :kpi_group_id, :integer, :null => false
       # Identify kpi type msc or bsc
-      t.column :kpi_type_id, :string, :null => false
+      # t.column :kpi_type_id, :string, :null => false
       t.column :order, :integer
       t.timestamps
     end
