@@ -1,0 +1,22 @@
+<%  form_tag("javascript:void(0)", :id => "kpi_tree_form") do %>
+  <div id="kpi_tree">
+    <% unless @kpi_groups.nil? %>
+    <ul>
+      <% @kpi_groups.each do |kpi_group| -%>
+        <li id="<%= "li_#{kpi_group.id}" -%>">
+        <span class="group_name">
+          <a href="" title="click to collapse"><%= image_tag("icon/group_closed.gif", :alt => "+") -%></a><%= kpi_group.name -%>
+        </span>
+        <ul id="sub" style="display:none">
+          <% kpi_group.kpis.each do |kpi| -%>
+            <% kpi_human_name = "#{kpi[:human_name]}" -%>
+            <% checked = false -%>
+            <li><%= check_box_tag "kpi[#{kpi.id}]", "#{kpi.name}", checked, :class => "checkbox" -%><%= kpi_human_name -%></li>
+          <% end -%>
+        </ul>
+        </li>
+      <% end -%>
+    </ul>
+    <% end  %>
+  </div>
+<% end %>

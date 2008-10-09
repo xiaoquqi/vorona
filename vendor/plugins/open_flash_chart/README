@@ -1,0 +1,25 @@
+Open Flash Chart
+===============
+
+Yet another open flash chart rails plugin:)
+This plugin based pullmonkey's plugin:http://pullmonkey.com/projects/open_flash_chart
+
+Open Flash Chart :http://teethgrinder.co.uk/open-flash-chart/index.php
+
+Usage
+=======
+Install plugin
+  ruby script/install http://martinx.googlecode.com/svn/trunk/plugins/open_flash_chart
+
+Copy javascript and swf files
+  rake chart:install
+
+Include javascript file in your layout
+  <%= javascript_include_tag [:defaults,] :chart %>
+
+Using chart or open_flash_chart in view
+  <%= chart width, height, url[,background]%>
+
+Enjoy
+
+Copyright (c) 2008 [pullmonkey,Martin Xu], released under the MIT license

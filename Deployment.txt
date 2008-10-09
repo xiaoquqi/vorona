@@ -1,0 +1,3 @@
+= Ver 1.0
+Copy RAILS_ROOT/lib/ADO.rb to RUBY_INSTALLATION/lib/ruby/site_ruby/1.8/DBD/ADO
+Tip: Create ADO folder if ADO is not exists
