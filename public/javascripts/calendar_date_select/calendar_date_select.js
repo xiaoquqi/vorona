@@ -86,7 +86,9 @@ CalendarDateSelect.prototype = {
       clear_button: true,
       year_range: 10,
       close_on_click: nil,
-      minute_interval: 5,
+      // Modify by Ray at 2008-06-25, set minute_interval to 60
+      //minute_interval: 5,
+      minute_interval: 60, 
       popup_by: this.target_element,
       month_year: "dropdowns",
       onchange: this.target_element.onchange,
