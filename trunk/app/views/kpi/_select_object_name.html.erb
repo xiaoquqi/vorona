@@ -1,0 +1,28 @@
+<div id="select_object_names">
+<table>
+  <tbody>
+    <tr>
+      <td>可选择网元(单击选择)</td>
+      <td width="30%">
+        <%= select_tag('can_select_object_name[]', options_for_select(@can_select_object_names, ''), {:multiple => true, :size => 5 }) %>
+      </td>
+      <td>已选择网元(单击删除)</td>
+      <td width="30%">
+        <%= select_tag('already_select_object_name[]', options_for_select(@already_select_object_names, ''), {:multiple => true, :size => 5 }) %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<%= observe_field 'can_select_object_name[]',
+                  :on => 'click',
+                  :update => 'select_object_names',
+                  :url => {:action => 'object_name_changed'},
+                  :with => 'can_select_object_name[]',
+                  :method => 'get'  -%>
+<%= observe_field 'already_select_object_name[]',
+                  :on => 'click',
+                  :update => 'select_object_names',
+                  :url => {:action => 'object_name_changed'},
+                  :with => 'already_select_object_name[]',
+                  :method => 'get'  -%>

@@ -1,0 +1,58 @@
+<%= javascript_include_tag("tree") %>
+<%= javascript_include_tag("calendar") %>
+<div id="sidebar">
+  <%= render(:partial => "kpi_tree") -%>
+</div>
+<%  form_tag({:action => "kpi_changed"}, :id => "kpi_conditions_form") do %>
+  <div id="content">
+    <fieldset id="filter">
+      <legend>选择条件</legend> 
+      <table width="100%">
+      <tbody>
+        <tr>
+          <td width="50%">
+            <table width="100%">
+              <tbody>
+                <tr>
+                  <td width="30%">选择图表类型</td>
+                  <td width="70%"><%= render :partial => "select_chart_type" %></td>
+                </tr>
+                <tr>
+                  <td>选择网元<%= render :partial => "single_object_name_select_tip" %></td>
+                  <td><%= render :partial => 'select_object_name' %></td>
+                </tr>
+                <tr>
+                  <td colspan="2" class="selected_kpi"><%= render(:partial => "selected_kpi") -%></td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+          <td width="50%">
+            <table width="100%">
+            <tbody>
+                <%= render :partial => 'select_time_type' %>
+                <tr>
+                  <td>选择日期时间</td>
+                  <td>
+                    <div id="show_date"><%= render (:partial => "show_date_24h") -%></div>
+                  </td>
+                </tr>
+                <%= render :partial => 'select_chart_num' %>
+                <tr>
+                  <td>
+                    <%= link_to_remote "确认", 
+                      { :url => { :action => 'generate_kpi_chart' },
+                        :update => "show_graph",
+                        :with => "Form.serialize('kpi_conditions_form')"
+                      }, :class => 'icon icon-checked' %>
+                  </td>
+                </tr>
+            </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table> 
+    </fieldset>
+  </div>
+<% end %>
