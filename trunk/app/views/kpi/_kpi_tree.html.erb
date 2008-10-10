@@ -1,3 +1,7 @@
+<div id="search_kpi">
+  <%= text_field_tag(:search_kpi_name) %>
+  <%= image_submit_tag("/images/icon/search.gif", :align => "top", :border => 0, :height => "24", :width => "24") %>
+</div>
 <%  form_tag("javascript:void(0)", :id => "kpi_tree_form") do %>
   <div id="kpi_tree">
     <% unless @kpi_groups.nil? %>
@@ -20,3 +24,6 @@
     <% end  %>
   </div>
 <% end %>
+<%= observe_form "kpi_tree_form", 
+    :url => {:action => 'kpi_tree_changed'},
+    :method => 'get' %>
