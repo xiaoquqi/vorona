@@ -55,6 +55,7 @@ fieldset#filters td.add-filter { text-align: right; vertical-align: top; }
 #kpi_tree ul {margin:1px; padding: 1px}
 #kpi_tree img{margin-right: 10px}
 #kpi_tree li { list-style-type: none; list-style-image: none; list-style-position: outside; margin: 0px 8px 0px 11px; padding: 3px 0px 1px 0px; font-size:13px}
+#search_kpi {padding-left: 20px; padding-top: 5px}
 
 #select_object_names select {width: 80px}
 #single_object_name_select_tip{color: red}

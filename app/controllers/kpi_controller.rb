@@ -20,6 +20,9 @@ class KpiController < ApplicationController
     @multiple_show = true 
   end
 
+  def kpi_tree_changed
+  end
+
 private
    def initialize_session
     session[:kpi_id] = nil
