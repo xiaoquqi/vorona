@@ -20,8 +20,16 @@ class KpiController < ApplicationController
     @multiple_show = true 
   end
 
+  # trigger by kpi tree
   def kpi_tree_changed
-  end
+    @selected_kpis = nil
+    @kpi_ids = Array.new
+    unless params[:kpi].nil?
+      @kpi_ids = params[:kpi].collect{ |key, value| key }
+      session[:kpi_id] = @kpi_ids
+      @selected_kpis = Kpi.find_all_by_id(@kpi_ids, :include => "kpi_group")
+    end
+  end 
 
 private
    def initialize_session
