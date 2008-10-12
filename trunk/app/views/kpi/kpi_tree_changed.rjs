@@ -1,0 +1,2 @@
+page[:selected_kpi].replace_html render :partial => 'selected_kpi'
+page[:single_object_name_select_tip].replace_html :partial => 'single_object_name_select_tip'
