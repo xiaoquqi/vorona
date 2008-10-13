@@ -4,7 +4,12 @@ class KpiController < ApplicationController
   def initialize
     @page_title = "KPI"
     @kpi_groups = KpiGroup.find(:all)
+    # Select object names
     @all_object_names = ObjectName.names 
+    @already_select_object_names = Array.new
+    @can_select_object_names = @all_object_names
+    # Select kpi id
+    @kpi_ids = Array.new
     # Chart number
     @single_show = true
     @multiple_show = true 
@@ -16,9 +21,6 @@ class KpiController < ApplicationController
 
   def show
     initialize_session
-    @already_select_object_names = Array.new
-    @kpi_ids = Array.new
-    @can_select_object_names = @all_object_names
   end
 
   # trigger by kpi tree
