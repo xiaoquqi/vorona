@@ -1,0 +1,2 @@
+page[:select_object_names].replace_html render :partial => 'select_object_name'
+page[:select_chart_num].replace_html :partial => 'select_chart_num'

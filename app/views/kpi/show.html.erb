@@ -37,7 +37,10 @@
                     <div id="show_date"><%= render (:partial => "show_date_24h") -%></div>
                   </td>
                 </tr>
-                <%= render :partial => 'select_chart_num' %>
+		<tr>
+		  <td>选择显示图表数量</td>
+		  <td><%= render :partial => 'select_chart_num' %></td>
+		</tr>
                 <tr>
                   <td>
                     <%= link_to_remote "确认", 
