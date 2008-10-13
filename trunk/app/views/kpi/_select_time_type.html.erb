@@ -12,7 +12,7 @@ time_type = {
       <% checked = false %>
       <% checked = true if value == "24h" %>
     <input type="radio" name='time_type' id="<%= "time_type_#{value}"%>" <% if checked == true %>checked="checked"<% end %> value="<%= value %>" 
-      onclick="<%=remote_function(:url => {:action => 'time_type_changed', :time_type => value}, :update => 'show_date') %>" /><%= key %>
+      onclick="<%=remote_function(:url => {:action => 'time_type_changed', :time_type => value}) %>" /><%= key %>
     <% end %>
   </td>
 </tr>

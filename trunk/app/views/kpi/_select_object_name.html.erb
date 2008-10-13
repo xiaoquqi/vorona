@@ -16,13 +16,11 @@
 </div>
 <%= observe_field 'can_select_object_name[]',
                   :on => 'click',
-                  :update => 'select_object_names',
                   :url => {:action => 'object_name_changed'},
                   :with => 'can_select_object_name[]',
                   :method => 'get'  -%>
 <%= observe_field 'already_select_object_name[]',
                   :on => 'click',
-                  :update => 'select_object_names',
                   :url => {:action => 'object_name_changed'},
                   :with => 'already_select_object_name[]',
                   :method => 'get'  -%>

@@ -1,0 +1,2 @@
+page[:show_date].replace_html :partial => "show_date_#{params[:time_type]}"
+page[:select_chart_num].replace_html :partial => 'select_chart_num'

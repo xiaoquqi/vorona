@@ -1,13 +1,8 @@
 <div id="select_chart_num">
-  <tr>
-    <td>选择显示图表数量</td>
-    <td>
-      <% if @single_show == true %>
-        <%= radio_button_tag "chart_num", "single_chart", session[:chart_num] == "single_chart" -%>单图
-      <% end %>
-      <% if @multiple_show == true %>
-        <%= radio_button_tag "chart_num", "multiple_chart", session[:chart_num] == "multiple_chart" -%>多图
-      <% end %>
-    </td>
-  </tr>
+  <% if @single_show == true %>
+    <%= radio_button_tag "chart_num", "single_chart", session[:chart_num] == "single_chart" -%>单图
+  <% end %>
+  <% if @multiple_show == true %>
+    <%= radio_button_tag "chart_num", "multiple_chart", session[:chart_num] == "multiple_chart" -%>多图
+  <% end %>
 </div>
