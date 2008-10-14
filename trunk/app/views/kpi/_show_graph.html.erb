@@ -1,2 +1,6 @@
-<div><%= @graph %></div>
-<div><%= @compare_graph %></div>
+<% unless @error.blank? %>
+  <p style="color: red; text-align: left; margin-left: 10px; margin-top: 0px">[错误]<%= @error %></p>	
+<% end  %>
+<% @graphs.each do |graph| %>
+  <div><%= graph %></div>
+<% end %>
