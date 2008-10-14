@@ -1,2 +1,6 @@
-page[:show_date].replace_html :partial => "show_date_#{params[:time_type]}"
+if session[:object_names].size > 1 and session[:time_type] == "24h"
+  page[:show_date].replace_html render :partial => 'show_date_24h', :locals => {:disable_select_date2 => true}
+else
+  page[:show_date].replace_html :partial => "show_date_#{params[:time_type]}"
+end
 page[:select_chart_num].replace_html :partial => 'select_chart_num'

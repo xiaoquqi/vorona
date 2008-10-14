@@ -13,8 +13,13 @@ class KpiController < ApplicationController
     # Chart number
     @single_show = true
     @multiple_show = true 
+    # error message
+    @error = nil
+    # graphs
+    @graphs = Array.new
   end
 
+  # Action
   def index
     redirect_to :action => "show"
   end
@@ -23,6 +28,14 @@ class KpiController < ApplicationController
     initialize_session
   end
 
+  def generate_kpi_chart
+    # Check argument
+    @error = check_arguments(params)
+    logger.debug(@error)
+    render :layout => false, :partial => "show_graph"
+  end
+
+  # Page Changed Method
   # trigger by kpi tree
   def kpi_tree_changed
     @selected_kpis = nil
@@ -39,11 +52,14 @@ class KpiController < ApplicationController
         @already_select_object_names = Array.new
         @can_select_object_names = @all_object_names
       end
+    else
+      session[:kpi_id] = nil
     end
     # Set chart number
     set_chart_number
   end 
 
+  # Trigger by click object name
   def object_name_changed
     logger.debug("kpi_id = #{session[:kpi_id].size}") unless session[:kpi_id].nil?
     # Select left box
@@ -71,7 +87,7 @@ class KpiController < ApplicationController
     set_chart_number
   end 
 
-   # Time type changed
+  # Tigger by Time type changed
   def time_type_changed
     session[:time_type] = params[:time_type]
     # Set chart number
@@ -96,4 +112,12 @@ private
        @multiple_show = false
      end
    end
+
+   def check_arguments(params)
+     errors = Array.new
+     errors.push("请从左侧选择KPI指标") if session[:kpi_id].blank?
+     errors.push("请选择网元") if session[:object_names].blank?
+     return errors.join("; ")
+   end
+
 end
