@@ -24,6 +24,12 @@ class KpiController < ApplicationController
     redirect_to :action => "show"
   end
 
+  # color test
+  def color
+    # Input source color, and genrated color number
+    @colors = Chart.generate_colors("#818D9D", 20)
+  end
+
   def show
     initialize_session
   end
