@@ -4,41 +4,46 @@ class Chart
 
   LINE = 'LINE'
   BAR3D = 'BAR3D'
-  # Params is request kpi id
-  def initialize(kpi_ids, date, object_name)
-    @kpi_ids = kpi_ids
-    @date = date
-    @start_time = "#{@date} 00:00:00"
-    @end_time = "#{@date} 23:00:00"
-    @object_name = object_name
-    @kpis = Kpi.find(:all, :conditions => ["id in (?)", @kpi_ids])
-    @kpi_human_name = @kpis.collect{|record|record.human_name}.join(' - ')
 
-    @g = Graph.new
-    @g.set_bg_color('#FFFFFF')
-    @g.title("#{@date} #{@object_name} #{@kpi_human_name}", '{color: #7E97A6; font-size: 20; text-align: center}')
-    @g.set_x_axis_color('#818D9D', '#F0F0F0' )
-    @g.set_y_axis_color( '#818D9D', '#ADB5C7' )
-    @g.y_right_axis_color('#164166' )
-    # Size/Color/orientation/Step/Grid_color
-    @g.set_x_label_style(10, '#164166', 2, 1, '#818D9D')
-    # Tip
-    @g.set_tool_tip('#tip#')
+  COLORS = ["#FF0000", "#00FF00", "#0000FF", "#FF00FF", "#00FFFF", "#FFFF00", "#F0F8FF", "#70DB93", "#5C3317", "#9F5F9F"]
 
-    # Line Setting
-    @line_width = 2
-    @line_color = ['#818D9D', '#9933CC']
-    # Line dot
-    @dot_size = 4
-    # Title Style
-    @title_size = 10
-    # Legend color
-    @x_lengend_color = '#164166'
-    @x_lengend_size = 20
-    @y_lengend_color = '#164166'
-    @y_lengend_size = 20
-
+  def initialize()
   end
+  # Params is request kpi id
+  #def initialize(kpi_ids, date, object_name)
+  #  @kpi_ids = kpi_ids
+  #  @date = date
+  #  @start_time = "#{@date} 00:00:00"
+  #  @end_time = "#{@date} 23:00:00"
+  #  @object_name = object_name
+  #  @kpis = Kpi.find(:all, :conditions => ["id in (?)", @kpi_ids])
+  #  @kpi_human_name = @kpis.collect{|record|record.human_name}.join(' - ')
+
+  #  @g = Graph.new
+  #  @g.set_bg_color('#FFFFFF')
+  #  @g.title("#{@date} #{@object_name} #{@kpi_human_name}", '{color: #7E97A6; font-size: 20; text-align: center}')
+  #  @g.set_x_axis_color('#818D9D', '#F0F0F0' )
+  #  @g.set_y_axis_color( '#818D9D', '#ADB5C7' )
+  #  @g.y_right_axis_color('#164166' )
+  #  # Size/Color/orientation/Step/Grid_color
+  #  @g.set_x_label_style(10, '#164166', 2, 1, '#818D9D')
+  #  # Tip
+  #  @g.set_tool_tip('#tip#')
+
+  #  # Line Setting
+  #  @line_width = 2
+  #  @line_color = ['#818D9D', '#9933CC']
+  #  # Line dot
+  #  @dot_size = 4
+  #  # Title Style
+  #  @title_size = 10
+  #  # Legend color
+  #  @x_lengend_color = '#164166'
+  #  @x_lengend_size = 20
+  #  @y_lengend_color = '#164166'
+  #  @y_lengend_size = 20
+
+  #end
 
   # Get kpi value by kpi_id and kpi_name
   def get_kpi_value
@@ -102,26 +107,50 @@ class Chart
     return @g.render
   end
 
-  def self.generate_colors(source_color, color_number)
+  # if color_number > defined color size
+  # Calculate color average between defined color
+  def self.generate_colors(color_number)
     colors = Array.new
-    colors.push(source_color)
-    for i in 1..color_number
-      RAILS_DEFAULT_LOGGER.debug("--> #{source_color}")
-      source_color =~ /#(..)(..)(..)/ 
-      r = $1.hex
-      g = $2.hex
-      b = $3.hex
-      RAILS_DEFAULT_LOGGER.debug("#{r}, #{g}, #{b}")
-      r = ((r + 1) > 255)? (255 - r) : (r + 1)
-      g = ((g + 5) > 255)? (255 - g) : (g + 5)
-      b = ((b + 10) > 255)? (255 - b) : (b + 10)
-      source_color = "\##{r.to_s(16)}#{g.to_s(16)}#{b.to_s(16)}"
-      colors.push(source_color)
-      RAILS_DEFAULT_LOGGER.debug("source: #{source_color}")
+    if color_number < COLORS.size
+      colors = COLORS[0..(color_number - 1)]
+    else
+      # Put all color into generate color first
+      # Then begin to calculate color
+      colors = COLORS.collect{|x|x}
+      for i in (COLORS.size + 1)..color_number
+        # Range
+        start_color_pos = i.modulo(COLORS.size) - 1
+        RAILS_DEFAULT_LOGGER.debug("pos: #{i} modulo #{COLORS.size} = #{i.modulo(COLORS.size)} #{start_color_pos}")
+        start_r, start_g, start_b = hex_to_rgb(COLORS[start_color_pos])
+        end_r, end_g, end_b = hex_to_rgb(COLORS[start_color_pos + 1])
+        RAILS_DEFAULT_LOGGER.debug("Start: #{COLORS[start_color_pos]}")
+        RAILS_DEFAULT_LOGGER.debug("Start: #{start_r} #{start_g} #{start_b}")
+        RAILS_DEFAULT_LOGGER.debug("End: #{COLORS[start_color_pos + 1]}")
+        RAILS_DEFAULT_LOGGER.debug("End: #{end_r} #{end_g} #{end_b}")
+        split_number = i.div(COLORS.size) + 1
+        r = (start_r + end_r)/split_number
+        g = (start_g + end_g)/split_number
+        b = (start_b + end_b)/split_number
+        RAILS_DEFAULT_LOGGER.debug("Generate: #{r} #{g} #{b}")
+        color = "\##{r.to_s(16)}#{g.to_s(16)}#{b.to_s(16)}"
+        colors.push(color)
+        RAILS_DEFAULT_LOGGER.debug("source: #{color}")
+      end
     end
     return colors
   end
 private
+  # Convert hex color to RGB 
+  def self.hex_to_rgb(hex_color)
+    if hex_color =~ /#(..)(..)(..)/
+      r = $1.hex
+      g = $2.hex
+      b = $3.hex
+      return r, g, b
+    else
+      return false
+    end
+  end 
   # Return integer max setting
   def integer_max(number)
     # Add for float number

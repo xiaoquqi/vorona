@@ -27,7 +27,7 @@ class KpiController < ApplicationController
   # color test
   def color
     # Input source color, and genrated color number
-    @colors = Chart.generate_colors("#818D9D", 20)
+    @colors = Chart.generate_colors(3)
   end
 
   def show
@@ -38,6 +38,14 @@ class KpiController < ApplicationController
     # Check argument
     @error = check_arguments(params)
     logger.debug(@error)
+    # if pass the checking generate kpi
+    if @error.blank?
+      case
+      when session[:time_type] == "24h" then generate_24h_kpi_chart(params)
+      when session[:time_type] == "same_hour" then generate_same_hour_kpi_chart(params)
+      when session[:time_type] == "sequence" then generate_sequence_kpi_chart(params)
+      end
+    end
     render :layout => false, :partial => "show_graph"
   end
 
@@ -124,6 +132,51 @@ private
      errors.push("请从左侧选择KPI指标") if session[:kpi_id].blank?
      errors.push("请选择网元") if session[:object_names].blank?
      return errors.join("; ")
+   end
+
+   # Generate chart
+   def generate_24h_kpi_chart(params)
+     if session[:kpi_id].size > 1
+       # Multiple KPI, only can select sinlge Object
+     else
+       # Single KPI
+       if session[:object_names].size > 1
+         # Multiple Object
+       else
+         # Single Object
+         if session[:chart_num] == "single_chart"
+           # Single Chart
+         else
+           # Multiple Chart, loop by Date
+         end
+       end
+     end
+   end
+
+   def generate_same_hour_kpi_chart(params)
+     if session[:kpi_id].size > 1
+       # Multiple KPI, only can select sinlge Object
+     else
+       # Single KPI
+       if session[:object_names].size > 1
+         # Multiple Object
+       else
+         # Single Object
+       end
+     end
+   end
+
+   def generate_sequence_kpi_chart(params)
+     if session[:kpi_id].size > 1
+       # Multiple KPI, only can select sinlge Object
+     else
+       # Single KPI
+       if session[:object_names].size > 1
+         # Multiple Object
+       else
+         # Single Object
+       end
+     end
    end
 
 end
